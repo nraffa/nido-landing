@@ -1,5 +1,4 @@
 import './style.css'
-import { Clerk } from '@clerk/clerk-js'
 import { applyTranslations, toggleLang, t, getLang } from './i18n.ts'
 
 // Set initial html lang attribute
@@ -47,21 +46,58 @@ function showToast() {
   }, 4000)
 }
 
-// Clerk waitlist
-const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+// Clerk waitlist — loaded via CDN (npm package doesn't bundle UI components)
+const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY as string | undefined
 
 if (publishableKey) {
-  const clerk = new Clerk(publishableKey)
-  clerk.load().then(() => {
+  let mounted = false
+
+  async function mountWaitlist() {
+    if (mounted) return
+    const clerk = window.Clerk
+    if (!clerk) return
+
+    mounted = true
+    await clerk.load()
+
     const waitlistEl = document.getElementById('waitlist') as HTMLDivElement | null
     if (!waitlistEl) return
 
-    // Clear placeholder content
     waitlistEl.innerHTML = ''
 
     clerk.mountWaitlist(waitlistEl, {
       afterJoinWaitlistUrl: '/?joined=true',
       signInUrl: 'https://nido.guru/sign-in',
     })
+  }
+
+  // Derive the Clerk Frontend API URL from the publishable key
+  const keyPayload = publishableKey.replace(/^pk_(test|live)_/, '')
+  const fapiUrl = atob(keyPayload).replace(/\$$/, '')
+
+  // Determine if this is a proxy domain or a native Clerk domain
+  const isProxy = !fapiUrl.endsWith('.clerk.accounts.dev')
+  const proxyUrl = import.meta.env.VITE_CLERK_PROXY_URL as string | undefined
+
+  // For proxy domains, load from Clerk's main CDN; for dev, load from FAPI
+  const scriptHost = isProxy
+    ? 'https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js'
+    : `https://${fapiUrl}/npm/@clerk/clerk-js@5/dist/clerk.browser.js`
+
+  const script = document.createElement('script')
+  script.async = true
+  script.crossOrigin = 'anonymous'
+  script.dataset.clerkPublishableKey = publishableKey
+  if (proxyUrl) script.dataset.clerkProxyUrl = `https://${proxyUrl}`
+  script.src = scriptHost
+
+  // When script is loaded, Clerk global exists — call load() then mount
+  script.addEventListener('load', async () => {
+    const clerk = window.Clerk
+    if (!clerk) return
+    await clerk.load()
+    mountWaitlist()
   })
+
+  document.head.appendChild(script)
 }
