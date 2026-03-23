@@ -1,44 +1,48 @@
 # Nido Landing Page
 
-Static landing page for Nido — a household budgeting app.
-Lives at `join.nido.guru`. The app itself is at `nido.guru`.
+Static waitlist page for Nido at `join.nido.guru`. App lives at `nido.guru`.
 
-## Tech Stack
+## Stack
 
-- **Vite** with vanilla TypeScript (no React)
-- **Tailwind CSS v4** via `@tailwindcss/vite`
-- **Clerk JS** (`@clerk/clerk-js`) for waitlist form — vanilla JS `mountWaitlist()`
-- **Bun** as package manager
+- Vite + vanilla TypeScript + Tailwind CSS v4
+- Clerk waitlist via CDN (not npm — see below)
+- Bun, deployed on AWS Amplify
 
 ## Commands
 
 ```bash
-bun run dev      # Start dev server
+bun run dev      # Dev server
 bun run build    # Build to dist/
-bun run preview  # Preview production build
+bun run preview  # Preview build
 ```
 
 ## Environment
 
-Copy `.env.example` to `.env.local` and set your Clerk publishable key:
-
+```bash
+VITE_CLERK_PUBLISHABLE_KEY=  # Clerk publishable key
+VITE_CLERK_PROXY_URL=        # Clerk proxy domain (e.g. clerk.nido.guru)
 ```
-VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key_here
-```
 
-## Design System
+Copy `.env.example` to `.env.local`. Restart dev server after changes.
 
-Achromatic (pure grayscale) OKLCh color tokens matching the main Nido app.
-Dark mode via `prefers-color-scheme`. System font stack.
+## Clerk Integration
 
-## i18n
+**Do NOT use the `@clerk/clerk-js` npm package for mounting UI components.**
+It doesn't bundle the UI — `mountWaitlist()` throws "not loaded with Ui components".
 
-Bilingual EN/ES via client-side translation in `src/i18n.ts`.
-Elements with `data-i18n="key"` get their textContent swapped.
-Language preference persisted in `localStorage`.
+Instead, load Clerk from CDN in `src/main.ts`:
+- For dev keys (`*.clerk.accounts.dev`): load from FAPI URL
+- For production proxy domains: load from jsdelivr CDN + set `data-clerk-proxy-url`
+
+The FAPI URL is derived by base64-decoding the publishable key payload and stripping the trailing `$`.
 
 ## Deploy
 
-Static site — deploy `dist/` to Vercel, Netlify, or S3.
-DNS: CNAME `join.nido.guru` to your deploy target.
-Add `join.nido.guru` to Clerk's allowed origins.
+AWS Amplify app `d2ekh8fu8r9ttn` in us-east-1 (archilo profile).
+Auto-deploys from `main` branch. Env vars set on Amplify app level.
+DNS: `join` CNAME → `ds22oesnup4wf.cloudfront.net`
+
+## Pre-commit Hook
+
+`.githooks/pre-commit` blocks `.env*` files and scans for secret patterns.
+Configured via `git config core.hooksPath .githooks`.
