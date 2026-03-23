@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Pre-commit hook: block sensitive files and secrets from being committed
+
+set -euo pipefail
+
+# Files that must never be committed
+BLOCKED_FILES=".env .env.local .env.*.local"
+
+for pattern in $BLOCKED_FILES; do
+  staged=$(git diff --cached --name-only --diff-filter=ACM | grep -E "^${pattern//\*/.*}$" || true)
+  if [ -n "$staged" ]; then
+    echo "ERROR: Blocked file staged for commit: $staged"
+    echo "These files may contain secrets. Remove them with: git reset HEAD $staged"
+    exit 1
+  fi
+done
+
+# Check staged files for potential secrets (patterns split to avoid self-matching)
+PK="pk_"
+SK="sk_"
+SECRET_PATTERNS="${PK}live_|${SK}live_|${PK}test_|${SK}test_|CLERK_SECRET_KEY=|AWS_SECRET"
+
+staged_files=$(git diff --cached --name-only --diff-filter=ACM | grep -v '\.githooks/' || true)
+if [ -n "$staged_files" ]; then
+  for file in $staged_files; do
+    if git diff --cached -- "$file" | grep -qE "$SECRET_PATTERNS"; then
+      echo "ERROR: Potential secret detected in staged file: $file"
+      echo "Review the file and remove any secrets before committing."
+      exit 1
+    fi
+  done
+fi
+
+echo "Pre-commit check passed."

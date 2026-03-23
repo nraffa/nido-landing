@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nido — Family Budget App | Multi-Currency Household Budgeting</title>
+    <meta
+      name="description"
+      content="Nido helps families manage money together. Track multi-currency accounts, import bank statements automatically, and let AI categorize your spending. Join the waitlist."
+    />
+    <link rel="canonical" href="https://join.nido.guru/" />
+    <link rel="alternate" hreflang="en" href="https://join.nido.guru/" />
+    <link rel="alternate" hreflang="es" href="https://join.nido.guru/" />
+    <link rel="alternate" hreflang="x-default" href="https://join.nido.guru/" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#252525" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐣</text></svg>" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Nido — Family Budget App | Multi-Currency Household Budgeting" />
+    <meta
+      property="og:description"
+      content="Nido helps families manage money together. Track multi-currency accounts, import bank statements automatically, and let AI categorize your spending."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://join.nido.guru/" />
+    <meta property="og:site_name" content="Nido" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="es_AR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Nido — Family Budget App" />
+    <meta
+      name="twitter:description"
+      content="Manage household finances together. Multi-currency, AI categorization, and automatic bank statement import."
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "name": "Nido — Family Budget App",
+            "description": "Nido helps families manage money together. Track multi-currency accounts, import bank statements automatically, and let AI categorize your spending.",
+            "url": "https://join.nido.guru/",
+            "inLanguage": ["en", "es"]
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "Nido",
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Web",
+            "description": "Household budgeting app for families. Multi-currency accounts, AI-powered transaction categorization, PDF bank statement import, and shared household management.",
+            "url": "https://nido.guru",
+            "offers": {
+              "@type": "Offer",
+              "availability": "https://schema.org/PreOrder",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "featureList": [
+              "Multi-currency account tracking with 28+ currencies",
+              "AI-powered transaction categorization",
+              "PDF and CSV bank statement import",
+              "Shared household budgeting for families",
+              "Automatic exchange rate conversion",
+              "Monthly reconciliation and balance verification",
+              "Custom categorization rules",
+              "Natural language expense input"
+            ]
+          },
+          {
+            "@type": "Organization",
+            "name": "Nido",
+            "url": "https://nido.guru"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="flex items-center justify-between px-6 sm:px-10 py-6 max-w-6xl mx-auto w-full reveal">
+      <div class="flex items-center gap-2.5">
+        <span class="text-2xl" aria-hidden="true">🐣</span>
+        <span class="text-lg font-semibold tracking-[-0.02em]">Nido</span>
+      </div>
+      <button
+        id="lang-toggle"
+        aria-label="Switch language"
+        class="lang-toggle text-muted-foreground hover:text-foreground transition-colors cursor-pointer py-1"
+      >
+        ES
+      </button>
+    </header>
+
+    <main class="flex-1">
+      <!-- Hero -->
+      <section class="max-w-6xl mx-auto px-6 sm:px-10 pt-12 sm:pt-24 pb-20 sm:pb-32">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 lg:gap-20 items-start">
+          <!-- Text column -->
+          <div>
+            <h1
+              class="text-[2.5rem] sm:text-[3.5rem] lg:text-[4rem] font-bold tracking-[-0.035em] leading-[1.05] reveal reveal-delay-1"
+              data-i18n="hero.title"
+            >
+              Your household finances, organized.
+            </h1>
+            <p
+              class="mt-5 sm:mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-lg reveal reveal-delay-2"
+              data-i18n="hero.subtitle"
+            >
+              Budget together as a family. Track accounts in multiple currencies,
+              import bank statements, and let AI handle the rest.
+            </p>
+          </div>
+
+          <!-- Waitlist form (Clerk will mount here) -->
+          <div class="reveal reveal-delay-3">
+            <div
+              id="waitlist"
+              class="rounded-[var(--radius)] border border-border bg-secondary p-8 sm:p-10 flex flex-col items-center justify-center min-h-[260px]"
+            >
+              <span class="text-4xl mb-4 emoji-float" aria-hidden="true">🐣</span>
+              <p
+                class="text-muted-foreground text-sm tracking-wide"
+                data-i18n="waitlist.placeholder"
+              >
+                Join the waitlist
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider max-w-6xl mx-auto" role="separator"></div>
+
+      <!-- Features -->
+      <section class="max-w-6xl mx-auto px-6 sm:px-10 py-20 sm:py-28">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <!-- Multi-currency -->
+          <div class="feature-card rounded-[var(--radius)] border border-border p-6 sm:p-8 reveal reveal-delay-4">
+            <span class="feature-number text-muted-foreground font-medium" aria-hidden="true">01</span>
+            <h2
+              class="mt-3 text-base font-semibold tracking-[-0.01em]"
+              data-i18n="feature.multicurrency.title"
+            >
+              Multi-currency
+            </h2>
+            <p
+              class="mt-2 text-sm text-muted-foreground leading-relaxed"
+              data-i18n="feature.multicurrency.desc"
+            >
+              Track accounts in 28+ currencies with automatic exchange rate
+              conversion. Perfect for families abroad or with international accounts.
+            </p>
+          </div>
+
+          <!-- PDF import -->
+          <div class="feature-card rounded-[var(--radius)] border border-border p-6 sm:p-8 reveal reveal-delay-5">
+            <span class="feature-number text-muted-foreground font-medium" aria-hidden="true">02</span>
+            <h2
+              class="mt-3 text-base font-semibold tracking-[-0.01em]"
+              data-i18n="feature.pdf.title"
+            >
+              Statement import
+            </h2>
+            <p
+              class="mt-2 text-sm text-muted-foreground leading-relaxed"
+              data-i18n="feature.pdf.desc"
+            >
+              Upload PDF or CSV bank statements and extract transactions
+              automatically. Saved mappings for your banks make re-imports instant.
+            </p>
+          </div>
+
+          <!-- AI categorization -->
+          <div class="feature-card rounded-[var(--radius)] border border-border p-6 sm:p-8 reveal reveal-delay-6">
+            <span class="feature-number text-muted-foreground font-medium" aria-hidden="true">03</span>
+            <h2
+              class="mt-3 text-base font-semibold tracking-[-0.01em]"
+              data-i18n="feature.ai.title"
+            >
+              AI categorization
+            </h2>
+            <p
+              class="mt-2 text-sm text-muted-foreground leading-relaxed"
+              data-i18n="feature.ai.desc"
+            >
+              Transactions categorized automatically using AI. Set up custom rules,
+              and Nido learns your spending patterns over time.
+            </p>
+          </div>
+
+          <!-- Shared household -->
+          <div class="feature-card rounded-[var(--radius)] border border-border p-6 sm:p-8 reveal reveal-delay-7">
+            <span class="feature-number text-muted-foreground font-medium" aria-hidden="true">04</span>
+            <h2
+              class="mt-3 text-base font-semibold tracking-[-0.01em]"
+              data-i18n="feature.shared.title"
+            >
+              Shared household
+            </h2>
+            <p
+              class="mt-2 text-sm text-muted-foreground leading-relaxed"
+              data-i18n="feature.shared.desc"
+            >
+              Invite family members to manage finances together. Everyone sees the
+              full picture, or switch to a personal view of your own spending.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-border">
+      <div class="max-w-6xl mx-auto px-6 sm:px-10 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+        <a
+          href="https://nido.guru/sign-in"
+          rel="noopener"
+          class="footer-link hover:text-foreground transition-colors"
+          data-i18n="footer.signin"
+        >
+          Already have access? Sign in
+        </a>
+        <span>&copy; 2025 Nido</span>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
